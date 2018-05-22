@@ -62,14 +62,13 @@ class HoursCounter extends Component {
 
 class PlayList extends Component{
   render(){
+    let playlist = this.props.playlist
     return(
       <div style={{width: '25%', display:"inline-block",...textColor}}>
-        <img/>
-        <h3>Playlist Name</h3>
+        <img />
+        <h3>{playlist.name}</h3>
         <ul>
-          <li>Song 1</li>
-          <li>Song 2</li>
-          <li>Song 3</li>
+          {playlist.songs.map(song => <li>{song.name}</li>)}
         </ul>
       </div>
     );
@@ -81,7 +80,8 @@ class Filter extends Component{
     return(
       <div style={textColor}>
         <img/>
-        <input type='text'/>
+        <input type='text' onKeyUp={(e)=>
+          this.props.onTextChange(e.target.value)}/>
       </div>
     );
   }
@@ -103,12 +103,15 @@ class PlayListCounter extends Component {
 class App extends Component {
   constructor(){
     super();
-    this.state = {serverData: {}}
+    this.state = {
+      serverData: {},
+      filterString: ''
+    }
   }
   componentDidMount(){
     setTimeout(()=>{
       this.setState({serverData: fakeServerData})
-    }, 1000);
+    }, 1000)
   }
   render() {
     return (
@@ -120,10 +123,16 @@ class App extends Component {
         </h1>
           <PlayListCounter PlayLists={this.state.serverData.user.PlayLists}/>
           <HoursCounter PlayLists={this.state.serverData.user.PlayLists}/>
-          <Filter/>
-          <PlayList/>
-          <PlayList/>
-          <PlayList/>
+          <Filter onTextChange={text=> {
+            this.setState({filterString: text})}}/>
+          {
+            this.state.serverData.user.PlayLists.filter(playlist =>
+              playlist.name.toLowerCase().includes(
+                this.state.filterString.toLowerCase())
+            ).map(playlist =>
+              <PlayList playlist={playlist}/>
+          )}
+
         </div> : <h1 style={{...textColor}}> Loading...</h1>
         }
       </div>
