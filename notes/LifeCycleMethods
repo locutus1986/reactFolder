@@ -1,0 +1,126 @@
+source - https://www.youtube.com/watch?v=7PpEQMdBIF0
+
+
+- lowercase names refer to built-in components
+- Capitalized names refer to custom components
+
+stateless functional example
+function ComponentName(_ref){
+var text = _ref.text;
+
+return React.createElement(
+    "h1",
+    null,
+    text
+  );
+}
+
+***********************************************************
+
+class ComponentName extends React.components{
+  render(){
+    const { text } = this.props
+    return (
+      <h1>{ text }</h1>
+    )
+  }
+}
+as long as there is a render() you can get props off the
+this. keyword
+props and state are read only in the render()
+only use this method if you need to change state.
+
+**************************************************************
+
+life cycles methods
+
+category 1 - Mounting Methods
+- constructor()
+  first life-cycle component.
+  React.component has it's own.
+  Mush call super(props) to not overwrite React.component constructor
+  example
+  constructor(props){
+    super(props)
+    this.state = {}
+  }
+
+- componentWillMOunt()
+  before DOM ready
+  props and state both ready
+  can use for calling setState
+  constructor is a better choice most of the time.
+
+- render()
+
+- componentDidMount
+  DOM is ready
+  stand up plugins
+  ref is now a function
+  dispatch actions, fetch data ect.
+
+--------------------------------------------------------------------
+
+category 2 - Updating
+- componentWillReceiveProps()
+  onChange
+  fires when:
+    props have changed, passed from parents
+    not called on initial render
+    updates state based on props
+    dispatch actions
+    don't compare object because loops
+    update state if props don't match
+    used to avoid forking the state
+
+- shouldComponentUpdate()
+  can increase performance
+  used to call shallowCompare
+  Most of the time use React.PureCompoent - still a shallowCompare
+
+- render()
+
+- ComponentDidUpdate()
+  after render
+  call before render
+  don't call setState in there
+  useful for triggering css animations
+  access to prevProps to copare before actions
+  called after render
+  update the DOM
+
+-----------------------------------------------------------------------
+
+category 3 - Unmounting
+- componentWillUnmount()
+  component destroyed
+  remove any event handlers of plugins
+  to prevent leaks.
+
+************************************************************************
+
+Testing
+
+unit test!!
+enzyme
+Jest
+
+***************************************************************
+
+firing order:
+
+constructor
+componentWillMOunt
+componentDidMount
+componentWillReceiveProps
+componentDidMount
+ComponentDidUpdate
+componentWillUnmount
+
+**********************************************************************
+
+state
+
+setState -- called to update the state.
+
+setState is async

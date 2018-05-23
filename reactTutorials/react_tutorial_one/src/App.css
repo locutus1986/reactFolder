@@ -20,3 +20,9 @@ h1{
 li{
   list-style: none;
 }
+.playlist{
+  background: black;
+  border-radius: 40%;
+  margin-top: 10px;
+  margin-left: 5px;
+}

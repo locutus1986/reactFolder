@@ -64,7 +64,7 @@ class PlayList extends Component{
   render(){
     let playlist = this.props.playlist
     return(
-      <div style={{width: '25%', display:"inline-block",...textColor}}>
+      <div className="playlist" style={{width: '25%', display:"inline-block",...textColor}}>
         <img />
         <h3>{playlist.name}</h3>
         <ul>
@@ -114,6 +114,12 @@ class App extends Component {
     }, 1000)
   }
   render() {
+    let playlistToRender = this.state.serverData.user ?
+    this.state.serverData.user.PlayLists
+    .filter(playlist =>
+        playlist.name.toLowerCase().includes(
+        this.state.filterString.toLowerCase())
+    ): []
     return (
       <div className="App">
         {this.state.serverData.user ?
@@ -121,15 +127,12 @@ class App extends Component {
           <h1 style={textColor}>
           {this.state.serverData.user.name}'s PlayList
         </h1>
-          <PlayListCounter PlayLists={this.state.serverData.user.PlayLists}/>
-          <HoursCounter PlayLists={this.state.serverData.user.PlayLists}/>
+          <PlayListCounter PlayLists={playlistToRender}/>
+          <HoursCounter PlayLists={playlistToRender}/>
           <Filter onTextChange={text=> {
             this.setState({filterString: text})}}/>
           {
-            this.state.serverData.user.PlayLists.filter(playlist =>
-              playlist.name.toLowerCase().includes(
-                this.state.filterString.toLowerCase())
-            ).map(playlist =>
+            playlistToRender.map(playlist =>
               <PlayList playlist={playlist}/>
           )}
 

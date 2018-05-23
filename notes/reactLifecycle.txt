@@ -1,0 +1,11 @@
+| Name of thing             | Sorta like...    | Mounted? | Can you even setState? | What would you say... ya do here?                                     |
+|---------------------------|------------------|----------|------------------------|-----------------------------------------------------------------------|
+| constructor               | initialize()     | nope     | nope                   | init stuff NO side effects                                            |
+| componentWillMount        | beforeDomReady() | nope     | yeah but don't         | Only needed in createClass now use constructor for most things        |
+| render                    | render           | nope     | please no              | render stuff and don't set any state please                           |
+| componentDidMount         | domReady()       | yup      | yup                    | DOM is a go init jQuery plugins dispatch stuff                        |
+| componentWillReceiveProps | onChange()       | yup      | yup                    | Props changed feel free to update state if needed                     |
+| componentWillUpdate       | beforeRender()   | yup      | nope                   | The props or state changed need to do anything else before rendering? |
+| shouldComponentUpdate     | shouldRender()   | yup      | nope                   | So yeah something changed but do we REALLY need to update?            |
+| componentDidUpdate        | afterRender()    | yup      | yup                    | Great success we've rendered a thing... anything else?                |
+| componentWillUnmount      | destroy()        | too late | too late               | Only you can prevent memory leaks aka unbind things                   | 
