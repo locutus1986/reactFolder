@@ -3,8 +3,6 @@ https://www.youtube.com/watch?v=yU5DYccb77A&t=34s
 
 use Open Weather Map API
 
-api key : https://www.youtube.com/watch?v=yU5DYccb77A&t=34s
-
 ************************************************************
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import queryString from 'query-string'
 
 let textColor = {color:'#FFB6C1'};
 let fakeServerData = {
@@ -12,30 +13,6 @@ let fakeServerData = {
           {name:'Drinking my baby goodbye', duration: 5000},
           {name: 'you can have the crown', duration: 45454},
           {name: 'feathered indian', duration: 8524}
-        ]
-      },
-      {
-        name: 'Driving',
-        songs: [
-          {name: 'shutup and let me go', duration: 45645},
-          {name: 'sober',  duration: 45645},
-          {name: 'dead disco', duration: 45645}
-        ]
-      },
-      {
-        name: 'Jason Isbell',
-        songs: [
-          {name: 'elephant', duration: 45645},
-          {name: 'vampires', duration: 45645},
-          {name: 'white oak', duration: 45645}
-        ]
-      },
-      {
-        name: 'classical',
-        songs: [
-          {name: 'nocturne in e flat major', duration: 45645},
-          {name: 'bach cello suite 1 prelude', duration: 45645},
-          {name: 'gymnopedie 3', duration: 45645}
         ]
       }
     ]
@@ -109,10 +86,15 @@ class App extends Component {
     }
   }
   componentDidMount(){
-    setTimeout(()=>{
-      this.setState({serverData: fakeServerData})
-    }, 1000)
+    let parse = queryString.parse(window.location.search)
+    let accessToken = parse.access_token
+
+    fetch('https://api.spotify.com/v1/me', {
+      headers: {'Authorization' : 'Bearer' + accessToken}
+    }).then(response => response.json())
+    .then(data => console.log(data))
   }
+
   render() {
     let playlistToRender = this.state.serverData.user ?
     this.state.serverData.user.PlayLists
@@ -136,7 +118,14 @@ class App extends Component {
               <PlayList playlist={playlist}/>
           )}
 
-        </div> : <h1 style={{...textColor}}> Loading...</h1>
+        </div> : <button onClick={() => window.location = 'http://localhost:8888/login'}
+          style={{
+                 padding: '20px',
+                 fontSize: '50px',
+                 marginTop: '20px'
+               }}>
+              Sign in with Spotify
+            </button>
         }
       </div>
     );
