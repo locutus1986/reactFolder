@@ -8,23 +8,7 @@ class App extends Component {
   state = {
     isFiltered: false,
     pendingguest: "",
-    guests : [
-      {
-        name : 'Atticus',
-        isConfirmed : false,
-        isEditing: false
-      },
-      {
-        name : 'Traci',
-        isConfirmed : true,
-        isEditing: false
-      },
-      {
-        name : 'Oliver',
-        isConfirmed : true,
-        isEditing: true
-      },
-    ]
+    guests : []
   }
 
   toggleGuestPropertyAt = (property, indexOfGuest) => {
